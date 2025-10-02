@@ -1,4 +1,5 @@
 import sys
+import os
 
 from core.utils import setup_logger, validate_semver
 from argparse import ArgumentParser, Namespace
@@ -60,7 +61,7 @@ def main() -> int | None:
     # INIT command parse
     if args.command == "init":
         args.name = str(args.name).strip()
-        args.path = sys.path[0]
+        args.path = os.getcwd()
 
         if not validate_semver(args.version):
             logger.warning(f"Version {args.version} seems like incorrect (SemVer)")

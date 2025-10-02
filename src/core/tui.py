@@ -5,7 +5,7 @@ from core.structures import Project
 
 class TerminalUserInterface:
     def __init__(self, args: Namespace) -> None:
-        self.handler = ProjectsHandler(args.projects_path)
+        self.handler = ProjectsHandler(args.path)
         self.args = args
 
     def init_command(self) -> None:

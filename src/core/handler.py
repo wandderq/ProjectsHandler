@@ -28,27 +28,33 @@ class ProjectsHandler:
 
     def init_project_files(self, project: Project) -> None:
         spec_path = os.path.join(project.path, ".project")
+        os.makedirs(spec_path, exist_ok=True)
         spec_files = os.listdir(spec_path)
-
-        if all([file in spec_files for file in self.required_project_files.keys()]):
-            overwrite = (
-                input(f"Project alreday exists. Overwrite it? y/n: ").lower().strip()
-                == "y"
-            )
-            if not overwrite:
-                return
+        
+        logger.debug(f'Existing spec_files: {spec_files}')
+        
+        if spec_files:
+            if all([file in spec_files for file in self.required_project_files.keys()]):
+                overwrite = (
+                    input(f"Project alreday exists. Overwrite it? y/n: ").lower().strip()
+                    == "y"
+                )
+                if not overwrite:
+                    return
+            else:
+                overwrite = (
+                    input("Some project files alreday exist. Overwrite it? y/n: ")
+                    .lower()
+                    .strip()
+                    == "y"
+                )
         else:
-            overwrite = (
-                input("Some project files alreday exist. Overwrite it? y/n: ")
-                .lower()
-                .strip()
-                == "y"
-            )
+            overwrite = True
 
         for file_name, file_content in self.required_project_files.items():
             if (not file_name in spec_files) or overwrite:
                 file_path = os.path.join(spec_path, file_name)
-                logger.debug(f"Overwriting file: {file_path}")
+                logger.debug(f"Writing file: {file_path}")
 
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(
