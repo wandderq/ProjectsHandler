@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ProjectsHandler"
-version = "0.1.0"
+version = "0.1.1"
 description = "Handler, assistant, manager of all your amazing projects"
 authors = [
     {name = "wandderq", email = "wanddr.qq.twink@gmail.com"},
